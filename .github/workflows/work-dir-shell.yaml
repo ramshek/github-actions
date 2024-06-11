@@ -1,6 +1,9 @@
 name: Workflow Dir's and Shells
 on: [push]
-
+defaults:
+    run:
+        shell: bash
+        # working-directory: /de/ed
 jobs:
     display-working-dir:
         name: Display workdir and shell
@@ -13,14 +16,25 @@ jobs:
                 echo $GITHUB_SHA
                 echo $GITHUB_REPOSITORY
                 echo $GITHUB_WORKSPACE
+            - name: Change working directory
+              working-directory: /home/runner
+              run: pwd
     display-wd-info-windows:
         name: Display workdir and info
         runs-on: windows-latest
+        defaults:
+            run:
+                shell: bash
         steps:
             - name: Display working Directory and List Files
               run: |
-                pwd
-                ls -a
-                echo $GITHUB_SHA
-                echo $GITHUB_REPOSITORY
-                echo $GITHUB_WORKSPACE
+                Get-Location
+                dir
+                echo $env:GITHUB_SHA
+                echo $env:GITHUB_REPOSITORY
+                echo $env:GITHUB_WORKSPACE
+            - name: Python Shell
+              shell: python
+              run: |
+                import platform
+                print(platform.processor())
