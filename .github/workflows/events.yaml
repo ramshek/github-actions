@@ -1,4 +1,4 @@
-name: Reppository Events
+name: Repository Events
 on:
     push:
     pull_request:
